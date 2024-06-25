@@ -92,8 +92,8 @@
   /* position: absolute; Absolute positioning for better control */
   bottom: 0; /* Position at the bottom of the viewport initially */
   left: 0; /* Align to the left side of the viewport */
-  width: 100%; /* Make the div full width */
-  height: auto; /* Adjust height as needed */
+  /* width: 100%; Make the div full width
+  height: auto; Adjust height as needed */
   transform: translateY(100%); /* Initially translate off-screen (100% below viewport) */
   opacity: 0; /* Start with transparent */
   transition: transform 1s ease-in-out, opacity 0.7s ease-in-out;
@@ -313,4 +313,218 @@
  
 .doggo2>h3:hover{
   color: white;
+}
+
+
+@media (max-width:1024px) {
+  .frontImages {
+    background: #151515;
+    display: flex;
+    justify-content: center;
+    margin-top: 4em;
+    /* bottom: 0; Position at the bottom of the viewport initially
+    left: ; Align to the left side of the viewport */
+    /* left: 10em; */
+    height: 12em;
+    width:50em; /* Make the div full width */
+    padding: -30em;
+    /* height: auto; Adjust height as needed */
+    transform: translateY(100%); /* Initially translate off-screen (100% below viewport) */
+    opacity: 0; /* Start with transparent */
+    transition: transform 1s ease-in-out, opacity 0.7s ease-in-out;
+  }
+
+  
+  .frontImages.visible {
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+
+  .frontImages1 {
+    /* background: #151515; */
+    opacity: 0.9;
+    display: flex;
+    height: 35em;
+    justify-content: center;
+    /* margin-top: 5em; */
+    margin-left: 2em;
+  }
+  .frontImages1:hover {
+    opacity: 0.55;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .frontImages1 > a {
+    height: 24em;
+    width: 30em;
+    /* border:none; */
+  }
+  /* .frontImages1>a>img{
+    height: 1em;
+    width: 1em;
+  } */
+  .frontImages2{
+    width: 10em;
+  }
+  
+}
+@media (min-width:912px) and (max-width: 1024px){
+  .hero1{
+    height: 43em;
+  }
+  .frontImages {
+    background: #151515;
+    display: flex;
+    justify-content: center;
+    margin-top: 4em;
+    /* bottom: 0; Position at the bottom of the viewport initially
+    left: ; Align to the left side of the viewport */
+    /* left: 10em; */
+    height: 12em;
+    width:45em; /* Make the div full width */
+    padding: -30em;
+    /* height: auto; Adjust height as needed */
+    transform: translateY(100%); /* Initially translate off-screen (100% below viewport) */
+    opacity: 0; /* Start with transparent */
+    transition: transform 1s ease-in-out, opacity 0.7s ease-in-out;
+  }
+
+  .frontImages1 {
+    /* background: #151515; */
+    opacity: 0.9;
+    display: flex;
+    height: 30em;
+    justify-content: center;
+    /* margin-top: 5em; */
+    margin-left: 2em;
+  }
+  .frontImages1:hover {
+    opacity: 0.55;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .frontImages1 > a {
+    height: 35em;
+    width: 27em;
+    /* border:none; */
+  }
+  .frontImages1 > a>img {
+    height: 30em;
+    width: 27em;
+    /* border:none; */
+  }
+  .frontImages2 {
+    /* background: #151515; */
+    opacity: 0.9;
+    height: 20em;
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    /* margin-top: 5em; */
+  }
+  .frontImages2>img{
+    height: 10em;
+  }
+}
+
+@media (min-width:768px) and (max-width:912px){
+  .hero1{
+    height: 40em;
+  }
+  .frontImages2{
+    display: none;
+  }
+  .frontImages {
+    background: #151515;
+    display: flex;
+    justify-content: center;
+    margin-top: 4em;
+    /* bottom: 0; Position at the bottom of the viewport initially
+    left: ; Align to the left side of the viewport */
+    /* left: 10em; */
+    height: 12em;
+    width:40em; /* Make the div full width */
+    padding: -30em;
+    /* height: auto; Adjust height as needed */
+    transform: translateY(100%); /* Initially translate off-screen (100% below viewport) */
+    opacity: 0; /* Start with transparent */
+    transition: transform 1s ease-in-out, opacity 0.7s ease-in-out;
+  }
+
+  .frontImages1 {
+    /* background: #151515; */
+    opacity: 0.9;
+    display: flex;
+    height: 30em;
+    justify-content: center;
+    /* margin-top: 5em; */
+    margin-left: 3em;
+  }
+  .frontImages1:hover {
+    opacity: 0.55;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .frontImages1 > a {
+    height: 30em;
+    width: 27em;
+    /* border:none; */
+  }
+  .frontImages1 > a>img {
+    height: 30em;
+    width: 38em;
+    /* border:none; */
+  }
+}
+@media (min-width:425px) and (max-width:768px){
+  .frontImages2{
+    display: none;
+  }
+  .hero1{
+    height: 30em;
+  }
+
+  .frontImages {
+    background: #151515;
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+    /* bottom: 0; Position at the bottom of the viewport initially
+    left: ; Align to the left side of the viewport */
+    /* left: 10em; */
+    /* height: 12em; */
+    width:20rem; /* Make the div full width */
+    /* padding: -30em; */
+    /* height: auto; Adjust height as needed */
+    transform: translateY(100%); /* Initially translate off-screen (100% below viewport) */
+    opacity: 0; /* Start with transparent */
+    transition: transform 1s ease-in-out, opacity 0.7s ease-in-out;
+  }
+
+  .frontImages1 {
+    /* background: #151515; */
+    opacity: 0.9;
+    /* display: flex; */
+    height: 20em;
+    /* justify-content: center; */
+    /* margin-top: 5em; */
+    margin-left: 12rem;
+  }
+  .frontImages1:hover {
+    opacity: 0.55;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .frontImages1 > a {
+    height: 20em;
+    width: 27em;
+    /* border:none; */
+  }
+  .frontImages1 > a >h1{
+    width: 13em;
+  }
+  .frontImages1 > a>img {
+    height: 20em;
+    width: 29em;
+    /* border:none; */
+  }
+  .dropdown-container{
+    display: none;
+  }
 }
