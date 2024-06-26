@@ -62,8 +62,8 @@
   top: 0; /* Position at the top of the viewport */
   left: 0; /* Position at the left of the viewport */
   width: 100%; /* Take up the full width of the viewport */
-  height: 100%; /* Take up the full height of the viewport */
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  height: 20%; /* Take up the full height of the viewport */
+  background-color: rgba(3, 3, 3, 0.5); /* Semi-transparent background */
   display: flex; /* Center the content vertically and horizontally */
   justify-content: center;
   align-items: center;
@@ -71,7 +71,12 @@
 }
 
 .searchPopupContent {
-  background-color: white; /* Background color for the popup content */
+  display: flex;
+  align-items: center;
+  border-radius: 10px 0 0 10px; 
+  height: 0.4em;
+  width: 25em;
+  background-color: rgb(179, 179, 179); /* Background color for the popup content */
   padding: 20px;
   opacity: 100;
   /* Add other styles for the popup content (e.g., border, box-shadow) */
@@ -83,9 +88,11 @@
   /* Example: */
   padding: 10px;
   border: none;
+  height: 3.45em;
   background-color: #ccc;
   cursor: pointer;
   z-index: 3;
+  border-radius: 0 10px 10px 0;
 
 }
 .searchInput{

@@ -6,6 +6,8 @@ import guitar from "../Assets/freestocks-Fx5rrxSaUtI-unsplash.jpg";
 import pomodoro from '../Assets/age-barros-rBPOfVqROzY-unsplash.jpg';
 import vintageCar from '../Assets/bradley-dunn-qijkjkJm63c-unsplash.jpg';
 import doggo from '../Assets/IMG_9939.png'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 
 const Hero = () => {

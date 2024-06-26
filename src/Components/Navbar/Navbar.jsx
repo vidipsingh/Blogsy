@@ -36,7 +36,7 @@ const Navbar = () => {
         <div className="searchPopup">
           <div className="searchPopupContent">
             {/* Your search input and other search-related elements go here */}
-            <input type="text" placeholder="Search..." className="searchInput" />
+            <input type="text" placeholder="Search..." className="searchInput" style={{width:'50em',height:'2em', background:'rgb(214, 214, 214)'}} />
             {/* You can add more elements here based on your search functionality */}
           </div>
           <button className="closeButton" onClick={handlePopupClick}>
