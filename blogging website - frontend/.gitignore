@@ -21,3 +21,22 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# OS generated files
+Thumbs.db
+
+# Editor files
+.idea/
+.vscode/
+
+# Logs
+logs/
+
+# Build output
+build/
+
+# Test output
+coverage/
+
+# Environment files
+.env*
