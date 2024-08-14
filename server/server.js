@@ -8,6 +8,7 @@ import cors from 'cors';
 import admin from 'firebase-admin';
 import serviceAccountKey from './blogsy-9935d-firebase-adminsdk-uaa24-0029c5d820.json' assert {type: "json"} ;
 import { getAuth } from 'firebase-admin/auth';
+import aws from 'aws-sdk';
 
 
 // Schemas
@@ -31,6 +32,13 @@ server.use(cors());
 mongoose.connect(process.env.DB_LOCATION, {
     autoIndex: true
 })
+
+// seeting up s3 aws bucket
+// const s3 = new aws.S3({
+//   region: '',
+//   accessKeyId: ,
+//   secretAccessKey:
+// })
 
 
 const formatDatatoSend = (user) => {
@@ -132,6 +140,12 @@ const generateUsername = async (email) => {
 // })
 
 // POST req for signup page
+
+// upload image url route
+server.get('/get-upload-url', (req, res) => {
+  
+})
+
 server.post("/signup", async (req, res) => {
     // destructuring fullname, email, password from json body
     let { fullname, email, password } = req.body;
