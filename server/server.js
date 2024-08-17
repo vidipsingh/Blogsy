@@ -13,6 +13,7 @@ import aws from 'aws-sdk';
 
 // Schemas
 import User from './Schema/User.js';
+import Blog from "./Schema/Blog.js";
 
 const server = express();
 let PORT = 3000;
@@ -40,6 +41,24 @@ mongoose.connect(process.env.DB_LOCATION, {
 //   secretAccessKey:
 // })
 
+const verifyJWT = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if(token == null ){
+    return res.status(401).json({ error: "No access token" })
+  }
+
+  jwt.verify(token, process.env.SECRET_ACCESS_KEY, (err, user) => {
+    if(err) {
+      return res.status(403).json({ error: "Access token is invalid" })
+    }
+
+    req.user = user.id
+    next()
+  })
+
+}
 
 const formatDatatoSend = (user) => {
 
@@ -262,6 +281,74 @@ server.post("/signup", async (req, res) => {
     })
     
   })
+
+  server.post('/create-blog', verifyJWT, (req,res) => {
+
+    let authId = req.user;
+
+    let { title, des, tags, content, draft } = req.body;
+
+    if(!title.length) {
+      return res.status(403).json({ error: "You must provide a title" });
+    }
+
+    if(!draft) {
+
+      if(!des.length || des.length > 200){
+        return res.status(403).json({ error: "You must provide blog description under 30 characters" });
+      }
+  
+      // if(!banner.length) {
+      //   return res.status(403).json({ error: "You must provide blog banner to publish it" });
+      // }
+  
+      if(!content.blocks.length) {
+        return res.status(403).json({ error: "There must be some blog content to publish it" });
+      }
+  
+      if(!tags.length || tags.length > 10) {
+        return res.status(403).json({ error: "Provide tags in order to publish the block, Maximum 10" });
+      }
+
+    }
+
+
+
+
+    // making all the tags in lower case
+    tags = tags.map(tag => tag.toLowerCase());
+    
+    let blog_id = title.replace(/[^a-zA-z0-9]/g, ' ').replace(/\s+/g, "-").trim() + nanoid();
+
+    let blog = new Blog({
+      title,
+      des,
+      tags,
+      author: authId,
+      blog_id,
+      draft: Boolean(draft)
+    })
+
+    blog.save().then(blog => {
+      let incrementVal = draft ? 0 : 1;
+
+      // finding the account by id and increasing the value of account.info>total_posts and push it in blogs array by the specifiv id
+      User.findOneAndUpdate({ _id: authId }, { $inc: { "account_info.total_posts" : incrementVal }, $push : { "blogs": blog._id } })
+      .then(user => {
+        return res.status(200).json({ id: blog.blog_id })
+      })
+      .catch(err => {
+        return res.status(500).json({ error: "Failed to update total posts number" })
+      }) 
+
+    })
+    .catch(err => {
+      return res.status(500).json({ error: err.message })
+    })
+    
+
+  })
+  
 
 server.listen(PORT, () => {
     console.log('Listening on Port: ' + PORT);
