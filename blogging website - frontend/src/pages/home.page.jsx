@@ -1,7 +1,30 @@
+import axios from "axios";
 import AnimationWrapper from "../common/page-animation";
 import InPageNavigation from "../components/inpage-navigation.component";
+import { useEffect, useState } from "react";
+import Loader from "../components/loader.component";
+import BlogPostCard from "../components/blog-post.component";
 
 const HomePage = () => {
+
+    let [ blogs, setBlog ] = useState(null);
+
+    const fetchLatestBlogs = () => {
+        axios.get('http://localhost:3000/latest-blogs')
+        .then(({ data }) => {
+            setBlog(data.blogs);
+            
+        })
+        .catch(err => {
+            console.log(err);
+            
+        })
+    }
+
+    useEffect(() => {
+        fetchLatestBlogs();
+    }, [])
+
     return (
         <AnimationWrapper>
             <section className="h-cover flex justify-center gap-10">
@@ -10,8 +33,16 @@ const HomePage = () => {
 
                     <InPageNavigation routes={["home", "trending blogs"]} defaultHidden={["trending blogs"]} >
 
-                        <h1>Latest blogs here</h1>
-        
+                        <>
+                            {
+                                blogs == null ? <Loader /> : blogs.map((blog, i) => {
+                                    return <AnimationWrapper transition={{ duration: 1, delay: i*.1 }} key={i} >
+                                        <BlogPostCard content={blog} author={blog.author.personal_info} />
+                                    </AnimationWrapper>
+                                })
+                            }
+                        </>
+
                         <h1>Trending blogs here</h1>
 
                     </InPageNavigation>
