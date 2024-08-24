@@ -64,14 +64,13 @@ const HomePage = () => {
     }
 
     const fetchTrendingBlogs = () => {
-        axios.get('http://localhost:3000/latest-blogs')
+        axios.get('http://localhost:3000/trending-blogs')
         .then(({ data }) => {
             setTrendingBlogs(data.blogs); 
         })
         .catch(err => {
             console.log(err);
-            
-        })
+        });
     }
 
     const loadBlogBycategory = (e) => {
@@ -134,9 +133,11 @@ const HomePage = () => {
                              : (
                                 trendingBlogs.length ?
                                     trendingBlogs.map((blog, i) => {
-                                        return <AnimationWrapper transition={{ duration: 1, delay: i*.1 }} key={i} >
+                                        return ( 
+                                        <AnimationWrapper transition={{ duration: 1, delay: i * 0.1 }} key={i} >
                                             <MinimalBlogPost blog={blog} index={i} />
                                         </AnimationWrapper>
+                                        );
                             })
                                 : <NoDataMessage message={"No trending blogs"} />
                         )}
