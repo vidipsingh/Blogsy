@@ -487,14 +487,14 @@ server.post("/signup", async (req, res) => {
 
   })
 
-  server.post("/get-blog", (req, res) => {
+  server.post('/get-blog', (req, res) => {
+    
     let { blog_id } = req.body;
 
     let incrementVal = 1;
 
     Blog.findOneAndUpdate({ blog_id }, { $inc : { "activity.total_reads": incrementVal } })
     .populate("author", "personal_info.fullname personal_info.username personal_info.profile_img")
-    // banner to be added
     .select("title des content activity publishedAt blog_id tags")
     .then(blog => {
 
