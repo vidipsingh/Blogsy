@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Logo from "../imgs/logo.png";
 import AnimationWrapper from "../common/page-animation";
 import defaultBanner from '../imgs/blog banner.png'
@@ -15,6 +15,7 @@ const BlogEditor = () => {
     let { blog, blog: { title, banner, content, tags, des }, setBlog, textEditor, setTextEditor, setEditorState } = useContext(EditorContext)
 
     let { userAuth: { access_token } } = useContext(UserContext);
+    let { blog_id } = useParams();
 
     let navigate = useNavigate();
 
@@ -23,7 +24,7 @@ const BlogEditor = () => {
         if(!textEditor.isReady) {
             setTextEditor(new EditorJS({
                 holderId: "textEditor",
-                data: content,
+                data: Array.isArray(content) ? content[0] : content,
                 tools: tools,
                 placeholder: "Write a masterpiece!"
               }))
@@ -119,10 +120,11 @@ const BlogEditor = () => {
             textEditor.save().then(content => {
 
                 let blogObj = {
+                    // banner to be included
                     title, des, content, tags, draft: true
                 }
 
-                axios.post('http://localhost:3000/create-blog', blogObj, {
+                axios.post('http://localhost:3000/create-blog', { ...blogObj, id: blog_id }, {
                     headers: {
                         'Authorization': `Bearer ${access_token}`
                     }
