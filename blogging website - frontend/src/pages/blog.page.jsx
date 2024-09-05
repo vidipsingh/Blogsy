@@ -6,6 +6,8 @@ import Loader from "../components/loader.component";
 import { getDay } from "../common/date";
 import BlogInteraction from "../components/blog-interaction.component";
 import BlogPostCard from "../components/blog-post.component";
+import BlogContent from "../components/blog-content.component";
+import Tag from "../components/tags.component";
 
 // banner to be included
 export const blogStructure = {
@@ -15,6 +17,17 @@ export const blogStructure = {
     author: { personal_info: { } },
     publishedAt: ''
 }
+
+// export const = useState({
+//   title: '',
+//   banner: '',
+//   content: '',
+//   tags: [],
+//   des: '',
+// });
+
+
+// export const EditorContext = createContext();
 
 export const BlogContext = createContext({ });
 
@@ -28,11 +41,13 @@ const BlogPage = () => {
   const [loading, setLoading] = useState(true);
 
 //   banner to be included
-  let { title, content, author: { personal_info: { fullname, username: author_username, profile_img } }, publishedAt } = blog;
+  let { title, content, tags, author: { personal_info: { fullname, username: author_username, profile_img } }, des, publishedAt } = blog;
 
   const fetchBlog = async () => {
     setIsLoading(true);
     setError(null);
+
+
 
     try {
       const response = await axios.post(`http://localhost:3000/get-blog`, {
@@ -47,6 +62,8 @@ const BlogPage = () => {
 
 
       setBlog(response.data.blog);
+      console.log(response.data.blog);
+      
       setLoading(false);
     } catch (err) {
       console.error("Error fetching blog:", err);
@@ -96,19 +113,45 @@ const BlogPage = () => {
                                 </p>
                             </div>
                             <p className="text-dark-grey opacity-75 max-sm:mt-6 max-sm:ml-12 max-sm:pl-5">Published on {getDay(publishedAt)}</p>
+                            
                         </div>
+                    </div> 
+
+                    <BlogInteraction />
+                      
+                      <div className="my-12 font-gelasio blog-page-content">
+                          {/* {
+                            content[0].blocks.map((block, i) => {
+                              return <div key={i} className="my-4 md:my-8">
+                                <BlogContent block={block} />
+                              </div>
+                            })
+                          } */}
+                      </div>
+
+                    <div>
+                      <p className="text-xl">{des}</p>
+                      <hr className="border-grey my-2 mt-4" />
+
+                      <h1 className="text-2xl font-bold">Tags:</h1>
+                      <div className="bg-grey p-5 rounded-md mt-2">
+                          <div>
+                          {tags.map((tag, index) => (
+                              <span key={index} className="bg-white mr-2 rounded-full px-4 py-2">
+                                {tag}
+                              </span>
+                          ))}
+                          </div>
+                      </div>
+
+                      <hr className="border-grey my-2 mt-4" />
                     </div>
-
-                    <BlogInteraction />
-                      {/* Blog content */}
-
-                    <BlogInteraction />
 
 
                         {
                           similarBlogs != null && similarBlogs.length ? 
                           <>
-                            <h1 className="text-2xl mt14 mb10 font-medium">Similar Blogs</h1>
+                            <h1 className="text-2xl mt-14 mb-10 font-medium">Similar Blogs</h1>
 
                             {
                               similarBlogs.map((blog, i) => {
