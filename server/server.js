@@ -8,12 +8,13 @@ import cors from 'cors';
 import admin from 'firebase-admin';
 import serviceAccountKey from './blogsy-9935d-firebase-adminsdk-uaa24-0029c5d820.json' assert {type: "json"} ;
 import { getAuth } from 'firebase-admin/auth';
-import aws from 'aws-sdk';
+// import aws from 'aws-sdk';
 
 
 // Schemas
 import User from './Schema/User.js';
 import Blog from "./Schema/Blog.js";
+import Notification from './Schema/Notification.js';
 
 const server = express();
 let PORT = 3000;
@@ -524,6 +525,58 @@ server.post("/signup", async (req, res) => {
     // if(blog.draft && !draft) {
     //   return res.status(500).json({ error: 'You can not access draft blogs'});
     // }
+
+  })
+
+  server.post('/like-blog', verifyJWT, (req, res) => {
+
+    let user_id = req.user;
+
+    let { _id, islikedByUser } = req.body;
+
+    let incrementVal = !islikedByUser ? 1 : -1;
+
+    Blog.findOneAndUpdate({ _id }, { $inc : { "activity.total_likes": incrementVal } })
+    .then(blog => {
+
+        if(!islikedByUser){
+          let like = new Notification({
+            type: "like",
+            blog: _id,
+            notification_for: blog.author,
+            user: user_id
+          })
+
+          like.save().then(notification => {
+            return res.status(200).json({ liked_by_user: true })
+          })
+        } else{
+
+          Notification.findOneAndDelete({ user: user_id, blog: _id, type: "like" })
+          .then(data => {
+            return res.status(200).json({ liked_by_user: false })
+          })
+          .catch(err => {
+            return res.status(500).json({ error: err.message })
+          })
+        }
+
+    })
+  })
+
+  server.post('/isliked-by-user', verifyJWT, (req, res) => {
+    let user_id = req.user;
+
+    let { _id } = req.body;
+
+    Notification.exists({ user: user_id, type: "like", blog: _id })
+    .then(result => {
+      return res.status(200).json({ result })
+    })
+    .catch(err => {
+      return res.status(500).json({ error: err.message })
+    })
+
 
   })
   
