@@ -8,6 +8,7 @@ import BlogInteraction from "../components/blog-interaction.component";
 import BlogPostCard from "../components/blog-post.component";
 import BlogContent from "../components/blog-content.component";
 import Tag from "../components/tags.component";
+import CommentsContainer from "../components/comments.component";
 
 // banner to be included
 export const blogStructure = {
@@ -37,6 +38,8 @@ const BlogPage = () => {
   const [similarBlogs, setSimilarBlogs] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [ islikedByUser, setLikedByUser ] = useState(false);
+  const [commentsWrapper, setCommentsWrapper] = useState(false);
+  const [totalParentCommentsLoaded, setTotalParentCommentsLoaded] = useState(0);
   const [error, setError] = useState(null);
 
   const [loading, setLoading] = useState(true);
@@ -86,6 +89,9 @@ const BlogPage = () => {
     setBlog(blogStructure);
     setSimilarBlogs(null);
     setLoading(true);
+    setLikedByUser(false);
+    setCommentsWrapper(false);
+    setTotalParentCommentsLoaded(0);
   }
 
   return (
@@ -94,7 +100,10 @@ const BlogPage = () => {
         {
             loading ? <Loader />
             : 
-            <BlogContext.Provider value={{ blog, setBlog, islikedByUser, setLikedByUser }}>
+            <BlogContext.Provider value={{ blog, setBlog, islikedByUser, setLikedByUser, commentsWrapper, setCommentsWrapper, totalParentCommentsLoaded, setTotalParentCommentsLoaded }}>
+
+                <CommentsContainer />
+
                 <div className="max-w-[900px] center py-10 max-lg:px-[5vw] ">
                     {/* banner to be included */}
                     <img src="" alt="" className="aspect-video " />
