@@ -8,7 +8,7 @@ import BlogInteraction from "../components/blog-interaction.component";
 import BlogPostCard from "../components/blog-post.component";
 import BlogContent from "../components/blog-content.component";
 import Tag from "../components/tags.component";
-import CommentsContainer from "../components/comments.component";
+import CommentsContainer, { fetchComments } from "../components/comments.component";
 
 // banner to be included
 export const blogStructure = {
@@ -51,22 +51,25 @@ const BlogPage = () => {
     setIsLoading(true);
     setError(null);
 
-
-
     try {
       const response = await axios.post(`http://localhost:3000/get-blog`, {
         blog_id, // Send blog_id in the request body
       });
+      
+      
+      blog.comments = await fetchComments({ blog_id: blog._id, setParentCommentCountFun: setTotalParentCommentsLoaded })
+      setBlog(response.data.blog);
+      console.log(response.data.blog);
+      
 
       const response2 = await axios.post(`http://localhost:3000/search-blogs`, { limit: 6, eliminate_blog: blog_id });
       // console.log(tags);
       
       setSimilarBlogs(response2.data.blogs); // Correctly setting the similar blogs from response2
-      console.log(response2.data.blogs); // Logging the similar blogs
+      // console.log(response2.data.blogs); // Logging the similar blogs
 
-
-      setBlog(response.data.blog);
-      console.log(response.data.blog);
+      // setBlog(response.data.blog);
+      // console.log(response.data.blog);
       
       setLoading(false);
     } catch (err) {
