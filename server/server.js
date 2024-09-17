@@ -695,7 +695,7 @@ server.post("/signup", async (req, res) => {
 
     let user_id = req.user;
 
-    let { _id, comment, blog_author } = req.body;
+    let { _id, comment, blog_author, notification_id } = req.body;
 
     if(!comment.length) {
       return res.status(403).json({ error: "Write something to leave a comment"})
@@ -722,6 +722,12 @@ server.post("/signup", async (req, res) => {
         }
 
         new Notification(notificationObj).save().then(notification => console.log('new notification created'));
+
+        if(notification_id){
+        }
+        Notification.findOneAndUpdate({ _id: notification_id }, { reply: commentFile._id })
+        .then(notification => console.log('notification updated')
+        )
 
         return res.status(200).json({
           comment, commentedAt, _id: commentFile._id, user_id, children
