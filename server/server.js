@@ -748,7 +748,7 @@ server.post("/signup", async (req, res) => {
     .populate("commented_by", "personal_info.username personal_info.fullname personal_info.profile_img")
     .skip(skip)
     .limit(maxLimit)
-    .sort({
+    .sort({ 
       'commentedAt': -1
     })
     .then(comment => {
