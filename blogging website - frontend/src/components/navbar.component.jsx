@@ -67,8 +67,11 @@ const Navbar = () => {
         <>
         <nav className='navbar z-50'>
             
-            <Link to='/' className='flex-none w-10'>
-            <img src={ theme == "light" ? darkLogo : lightLogo } className='w-full'/>
+            <Link to='/' className='flex-none w-10 mr-24'>
+            <div className='flex h-10 items-center'>
+                <img src={ theme == "light" ? darkLogo : lightLogo } className='w-full'/>
+                <h1 className='text-2xl ml-3 pb-2 font-semibold'>Blog<span className='text-3xl text-pink-400'>s</span>y</h1>
+            </div>
             </Link>
 
             <div className={'absolute bg-white w-full left-0 top-full mt-0.5 border-b border-grey py-4 px-[5vw] md:border-0 md:block md:relative md:inset-0 md:p-0 md:w-auto md:show ' + (searchBoxVisibility ? 'show' : 'hide')}>
